@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>node.js自带的异步写法 | GoodLoving博客</title>
+    <meta name="generator" content="VuePress 1.4.1">
+    <link rel="icon" href="/deer.png">
+    <meta name="description" content="goodloving的个人博客">
+    <link rel="preload" href="/assets/css/0.styles.9788b995.css" as="style"><link rel="preload" href="/assets/js/app.da1fcfb1.js" as="script"><link rel="preload" href="/assets/js/2.a5a90059.js" as="script"><link rel="preload" href="/assets/js/21.f8ec5466.js" as="script"><link rel="prefetch" href="/assets/js/10.2ec8cc46.js"><link rel="prefetch" href="/assets/js/11.120eb2ba.js"><link rel="prefetch" href="/assets/js/12.b4424a1c.js"><link rel="prefetch" href="/assets/js/13.fdee7ecb.js"><link rel="prefetch" href="/assets/js/14.b80709a8.js"><link rel="prefetch" href="/assets/js/15.5fcc9b2c.js"><link rel="prefetch" href="/assets/js/16.b734a989.js"><link rel="prefetch" href="/assets/js/17.8d4c7acd.js"><link rel="prefetch" href="/assets/js/18.0a70c3d7.js"><link rel="prefetch" href="/assets/js/19.897824ba.js"><link rel="prefetch" href="/assets/js/20.ab202385.js"><link rel="prefetch" href="/assets/js/22.3709aff1.js"><link rel="prefetch" href="/assets/js/23.155f7dae.js"><link rel="prefetch" href="/assets/js/3.29fc4231.js"><link rel="prefetch" href="/assets/js/4.a2352ed1.js"><link rel="prefetch" href="/assets/js/5.e922c6c6.js"><link rel="prefetch" href="/assets/js/6.fd1ce71a.js"><link rel="prefetch" href="/assets/js/7.bd736922.js"><link rel="prefetch" href="/assets/js/8.1d8e4393.js"><link rel="prefetch" href="/assets/js/9.ef0f8e05.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.9788b995.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/deer.png" alt="GoodLoving博客" class="logo"> <span class="site-name can-hide">GoodLoving博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/pages/blogs/catalog.html" class="nav-link">
+  文章
+</a></div><div class="nav-item"><a href="https://blog.csdn.net/qq_31967985" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  CSDN
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://gitee.com/goodloving" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://github.com/goodloving" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/pages/blogs/catalog.html" class="nav-link">
+  文章
+</a></div><div class="nav-item"><a href="https://blog.csdn.net/qq_31967985" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  CSDN
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://gitee.com/goodloving" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://github.com/goodloving" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>导航</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Vue基础</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>JS进阶</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Node基础</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/pages/blogs/async、await与promise.html" class="sidebar-link">async、await与promise</a></li><li><a href="/pages/blogs/node.js自带的异步写法.html" class="active sidebar-link">node.js自带的异步写法</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/pages/blogs/node.js自带的异步写法.html#_1-callback函数" class="sidebar-link">1.callback函数</a></li><li class="sidebar-sub-header"><a href="/pages/blogs/node.js自带的异步写法.html#_2-eventemitter（发布订阅模式）" class="sidebar-link">2.EventEmitter（发布订阅模式）</a></li><li class="sidebar-sub-header"><a href="/pages/blogs/node.js自带的异步写法.html#_3-generator生成器函数" class="sidebar-link">3.Generator生成器函数</a></li><li class="sidebar-sub-header"><a href="/pages/blogs/node.js自带的异步写法.html#_4-小结" class="sidebar-link">4.小结</a></li></ul></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>项目应用</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="node-js自带的异步写法"><a href="#node-js自带的异步写法" class="header-anchor">#</a> node.js自带的异步写法</h1> <h2 id="_1-callback函数"><a href="#_1-callback函数" class="header-anchor">#</a> 1.callback函数</h2> <p>  回调就是一个函数的调用过程。那么就从理解这个调用过程开始吧。函数a有一个参数，这个参数是个函数b，当函数a执行完以后执行函数b，那么这个过程就叫回调。
+直接上代码：</p> <div class="language- extra-class"><pre class="language-text"><code>/** 
+ * node自带的异步写法：：：
+ * callback函数 */
+function timer(time, callback) {
+  console.log('this is parent function---1')
+  setTimeout(() =&gt; {
+    console.log('go to asynchronous function')
+    callback()
+    console.log('after the callback')
+  }, time)
+}
+
+timer(3000, () =&gt; {
+  console.log('this is callback function')
+})
+
+</code></pre></div><p>运行结果：</p> <div class="language- extra-class"><pre class="language-text"><code>this is parent function---1
+go to asynchronous function
+this is callback function
+after the callback
+</code></pre></div><h2 id="_2-eventemitter（发布订阅模式）"><a href="#_2-eventemitter（发布订阅模式）" class="header-anchor">#</a> 2.EventEmitter（发布订阅模式）</h2> <p>EventEmitter 类由 events 模块定义：</p> <blockquote><p>const EventEmitter = require('events');</p></blockquote> <p>  events 模块只提供了一个对象： events.EventEmitter。EventEmitter 的核心就是事件触发与事件监听器功能的封装。
+直接上代码：</p> <div class="language- extra-class"><pre class="language-text"><code>/** 
+ * node自带的异步写法：：：
+ * EventEmitter的 on 和 emit （发布订阅模式） */
+const EventEmitter = require('events')
+const observer = new EventEmitter()
+
+//on：：：可以触发多次，允许同一个事件（topic）最多指定10个回调函数，超过10个会发出警告，可以通过   observer.setMaxListeners(20)改为20个
+observer.on('topic', (x) =&gt; {
+  console.log(x, '我订阅了topic，你呢？')
+})
+observer.on('topic', (y) =&gt; {
+  console.log(y, '我也订阅了topic，还有谁呢？')
+})
+//once：：：回调函数只被触发一次
+observer.once('topic', (x) =&gt; {
+  console.log('我是once的订阅者，只被触发一次哟')
+})
+
+
+function main() {
+  console.log('start')
+  //第一个参数表示事件名称与 on 注册的事件名一致，后面参数出入为 on 中绑定的回调函数的参数
+  observer.emit('topic', 8)
+  observer.emit('topic', 2)
+  console.log('我已经发送了2个订阅')
+  console.log('end')
+}
+
+main()
+</code></pre></div><p>运行结果：</p> <div class="language- extra-class"><pre class="language-text"><code>start
+8 '我订阅了topic，你呢？'
+8 '我也订阅了topic，还有谁呢？'
+我是once的订阅者，只被触发一次哟
+2 '我订阅了topic，你呢？'
+2 '我也订阅了topic，还有谁呢？'
+我已经发送了2个订阅
+end
+</code></pre></div><h2 id="_3-generator生成器函数"><a href="#_3-generator生成器函数" class="header-anchor">#</a> 3.Generator生成器函数</h2> <p>  generator（生成器）是ES6标准引入的新的数据类型。一个generator看上去像一个函数，但可以返回多次。generator可以让某一个函数执行某个动作之后暂时停止，之后 再次触发，再次执行。其中，多次返回的界限以 ==yeild== 区分。
+直接上代码：</p> <div class="language- extra-class"><pre class="language-text"><code>/** Generator生成器函数 ‘*’语法上比普通函数多了一个星号，
+ * 函数体内部可以使用yield和yield*关键字 */
+function* doSomething() {
+  console.log('0')
+  console.log('1')
+  yield               //Line(a)
+  console.log('2')
+  console.log('3')
+}
+
+//实例化生成器函数
+var gen1 = doSomething()
+//打印出‘1’，然后悬停在 Line(a) 处
+gen1.next()
+//恢复Line(a)点的执行，然后打印出‘2’
+gen1.next()
+</code></pre></div><p>运行结果：</p> <div class="language- extra-class"><pre class="language-text"><code>0
+1
+2
+3
+</code></pre></div><h2 id="_4-小结"><a href="#_4-小结" class="header-anchor">#</a> 4.小结</h2> <p>  该篇博客没有运用上的深入的讲解，可以看做是知识点的笔记，对于callback、EventEmitter和Generator的语法的讲解，具体运用场景没有说明。</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/pages/blogs/async、await与promise.html" class="prev">
+        async、await与promise
+      </a></span> <span class="next"><a href="/pages/blogs/基于VuePress的个人博客建立和部署.html">
+        1、基于VuePress的个人博客建立和部署
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.da1fcfb1.js" defer></script><script src="/assets/js/2.a5a90059.js" defer></script><script src="/assets/js/21.f8ec5466.js" defer></script>
+  </body>
+</html>

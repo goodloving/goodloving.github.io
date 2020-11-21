@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>[Vue五]:Vue和echarts结合 | GoodLoving博客</title>
+    <meta name="generator" content="VuePress 1.4.1">
+    <link rel="icon" href="/deer.png">
+    <meta name="description" content="goodloving的个人博客">
+    <link rel="preload" href="/assets/css/0.styles.9788b995.css" as="style"><link rel="preload" href="/assets/js/app.da1fcfb1.js" as="script"><link rel="preload" href="/assets/js/2.a5a90059.js" as="script"><link rel="preload" href="/assets/js/16.b734a989.js" as="script"><link rel="prefetch" href="/assets/js/10.2ec8cc46.js"><link rel="prefetch" href="/assets/js/11.120eb2ba.js"><link rel="prefetch" href="/assets/js/12.b4424a1c.js"><link rel="prefetch" href="/assets/js/13.fdee7ecb.js"><link rel="prefetch" href="/assets/js/14.b80709a8.js"><link rel="prefetch" href="/assets/js/15.5fcc9b2c.js"><link rel="prefetch" href="/assets/js/17.8d4c7acd.js"><link rel="prefetch" href="/assets/js/18.0a70c3d7.js"><link rel="prefetch" href="/assets/js/19.897824ba.js"><link rel="prefetch" href="/assets/js/20.ab202385.js"><link rel="prefetch" href="/assets/js/21.f8ec5466.js"><link rel="prefetch" href="/assets/js/22.3709aff1.js"><link rel="prefetch" href="/assets/js/23.155f7dae.js"><link rel="prefetch" href="/assets/js/3.29fc4231.js"><link rel="prefetch" href="/assets/js/4.a2352ed1.js"><link rel="prefetch" href="/assets/js/5.e922c6c6.js"><link rel="prefetch" href="/assets/js/6.fd1ce71a.js"><link rel="prefetch" href="/assets/js/7.bd736922.js"><link rel="prefetch" href="/assets/js/8.1d8e4393.js"><link rel="prefetch" href="/assets/js/9.ef0f8e05.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.9788b995.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/deer.png" alt="GoodLoving博客" class="logo"> <span class="site-name can-hide">GoodLoving博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/pages/blogs/catalog.html" class="nav-link">
+  文章
+</a></div><div class="nav-item"><a href="https://blog.csdn.net/qq_31967985" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  CSDN
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://gitee.com/goodloving" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://github.com/goodloving" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/pages/blogs/catalog.html" class="nav-link">
+  文章
+</a></div><div class="nav-item"><a href="https://blog.csdn.net/qq_31967985" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  CSDN
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://gitee.com/goodloving" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://github.com/goodloving" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>导航</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Vue基础</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/pages/blogs/[Vue一]:了解Vue项目的建立.html" class="sidebar-link">[Vue一]:了解Vue项目的建立</a></li><li><a href="/pages/blogs/[Vue二]:简单登录界面的实现.html" class="sidebar-link">[Vue二]:简单登录界面的实现</a></li><li><a href="/pages/blogs/[Vue三]:用户登录状态保存和判断.html" class="sidebar-link">[Vue三]:用户登录状态保存和判断</a></li><li><a href="/pages/blogs/[Vue四]:node后端响应登录请求.html" class="sidebar-link">[Vue四]:node后端响应登录请求</a></li><li><a href="/pages/blogs/[Vue五]:Vue和echarts结合.html" class="active sidebar-link">[Vue五]:Vue和echarts结合</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/pages/blogs/[Vue五]:Vue和echarts结合.html#_1-echarts了解" class="sidebar-link">1.echarts了解</a></li><li class="sidebar-sub-header"><a href="/pages/blogs/[Vue五]:Vue和echarts结合.html#_2-实现思路" class="sidebar-link">2.实现思路</a></li><li class="sidebar-sub-header"><a href="/pages/blogs/[Vue五]:Vue和echarts结合.html#_3-vue项目中echarts的实现" class="sidebar-link">3.Vue项目中echarts的实现</a></li><li class="sidebar-sub-header"><a href="/pages/blogs/[Vue五]:Vue和echarts结合.html#_4-初步效果及问题" class="sidebar-link">4.初步效果及问题</a></li><li class="sidebar-sub-header"><a href="/pages/blogs/[Vue五]:Vue和echarts结合.html#_5-echarts图表对屏幕大小自适应" class="sidebar-link">5.echarts图表对屏幕大小自适应</a></li></ul></li><li><a href="/pages/blogs/[Vue六]:vue开发自定义插件.html" class="sidebar-link">[Vue六]:vue开发自定义插件</a></li><li><a href="/pages/blogs/[Vue七]:通过nginx的服务器配置.html" class="sidebar-link">[Vue七]:通过nginx的服务器配置</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>JS进阶</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Node基础</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>项目应用</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="vue五-vue和echarts结合"><a href="#vue五-vue和echarts结合" class="header-anchor">#</a> [Vue五]:Vue和echarts结合</h1> <p></p><div class="table-of-contents"><ul><li><a href="#_1-echarts了解">1.echarts了解</a></li><li><a href="#_2-实现思路">2.实现思路</a></li><li><a href="#_3-vue项目中echarts的实现">3.Vue项目中echarts的实现</a></li><li><a href="#_4-初步效果及问题">4.初步效果及问题</a></li><li><a href="#_5-echarts图表对屏幕大小自适应">5.echarts图表对屏幕大小自适应</a></li></ul></div><p></p> <h2 id="_1-echarts了解"><a href="#_1-echarts了解" class="header-anchor">#</a> 1.echarts了解</h2> <p>作为一个前端开发人员，对于<a href="https://www.echartsjs.com/zh/index.html" target="_blank" rel="noopener noreferrer">echarts<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>应该是十分熟悉的，在日常开发中，大多数关于数据的展示是通过图表实现的，而rcharts则是图表展示的首选js库。</p> <h2 id="_2-实现思路"><a href="#_2-实现思路" class="header-anchor">#</a> 2.实现思路</h2> <p>在本例中实现一个页面中按照4x3的布局排列12个echarts折线图，并且每个折线图是通过父组件传值给子组件通过for循环实现的。
+<img src="https://img-blog.csdnimg.cn/20190901105448672.?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMxOTY3OTg1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p> <h2 id="_3-vue项目中echarts的实现"><a href="#_3-vue项目中echarts的实现" class="header-anchor">#</a> 3.Vue项目中echarts的实现</h2> <p>1.导入echarts并注册
+在当前文件夹下输入命令：</p> <blockquote><p>npm i echarts -S</p></blockquote> <p>在main.js中导入模块并注册：</p> <div class="language- extra-class"><pre class="language-text"><code>import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+</code></pre></div><p>2.在在components目录新建subcomponents目录存放子组件，并在其下新建SubEcharts.vue组件作为子组件实现echarts绘图和接受父组件的参数：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;template&gt;
+  &lt;div :id=&quot;echartsId&quot; class=&quot;echarts&quot;&gt;&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  /**父组件传值 */
+  props:{
+    idCode: {
+      type: Number,
+      required: true
+    }
+  },
+
+  /**数据 */
+  data(){
+    return{
+      xAxisData: [1,2,3,4,5,6,7,8,9,10,11,12],
+      dataTest:[5,9,3,7,8,12,45,25,11,6,9,20],
+    }
+  },
+
+  /**计算属性 */
+  computed:{
+    echartsId(){
+      return 'echarts' + this.idCode
+    }
+  },
+
+  /**挂在函数 */
+  mounted(){
+    this.drowLine()
+  },
+
+  methods:{
+    /**绘制折线图 */
+    drowLine(){
+      let echarts = this.$echarts.init(document.getElementById(this.echartsId));
+      let echartsid = document.getElementById(this.echartsId)
+      echarts.setOption({
+        backgroundColor:'#000',
+        title: {
+          text: 'vue项目中echarts的使用',
+          textStyle: {
+            color:'#fff',
+            fontSize:18,
+            fontWeight:'bold',
+          },
+          subtext:'作者:微信-迟亦早(chiyizao)，csdn-goodlovingz',
+          subtextStyle: {
+            color:'#ddd',
+          },
+        },
+        legend:{
+          bottom:'5%',
+          textStyle: {
+            color: '#fff',
+            fontSize: 12,
+          },
+          data: ['测试数据'],
+        },
+        tooltip:{
+          show:true,
+          trigger: 'axis',
+          axisPointer: {
+            type:'cross',
+            crossStyle:{
+              color:'#ddd',
+            },
+          },
+        }, 
+        grid:{
+          left:20,
+          right:20,
+          top:80,
+          bottom:20,
+          containLabel:true,
+        },
+        xAxis: {
+          show:true,
+          axisLabel:{
+            interval:1,
+            rotate:-20,
+            margin: 30,
+            textStyle:{
+              color:'#ddd',
+              align: 'center'
+            },
+          },
+          axisTick:{
+              alignWithLabel:true,
+              lineStyle:{
+                color:'#ddd',   
+              },
+          },
+          data: this.xAxisData,
+        },
+        yAxis: [
+          {
+            type:'value',
+            name:'(人/次)',
+            nameTextStyle:{
+                color:'#ddd',
+            },
+            axisLabel:{
+            textStyle:{
+                  color:'#ddd',
+            },
+            },
+            axisTick:{
+              alignWithLabel:true,
+              lineStyle:{
+                  color:'#ddd',
+                  
+              },
+            },
+            splitLine:{
+                show:false,
+            },
+          },
+        ],
+        series: [
+          {
+            type: 'line',
+            name:'测试',
+            stack:'人数',
+            data: this.dataTest,
+            label: {
+              normal: {
+                show:true,
+                position: 'insideTop',
+                offset:[0,20],
+                textStyle:{
+                  color:'#000',
+                },
+              },
+              emphasis: {
+                textStyle:{
+                  color:'#fff',
+                }, 
+              },
+            },
+          },
+        ]
+      });
+  }
+}
+&lt;/script&gt;
+&lt;style&gt;
+.echarts{
+  width: 100%;
+  height: 35vh;
+  background-color: #fff;
+  margin: 5
+}
+&lt;/style&gt;
+</code></pre></div><p>在子组件中要注意：<strong>子组件中的div映射到父组件中作为一个单独的div，所以要求div的id不能重复，否则所有的echarts图形会绘制在第一个绘图区重叠和覆盖</strong>。因此，在子组件中我们对div的id绑定计算属性<code>&lt;div :id=&quot;echartsId&quot; class=&quot;echarts&quot;&gt;&lt;/div&gt;</code>，并且将父组件中传进来的数据进行组合形成唯一的id防止重复</p> <div class="language- extra-class"><pre class="language-text"><code>/**计算属性 */
+  computed:{
+    echartsId(){
+      return 'echarts' + this.idCode
+    }
+  },
+</code></pre></div><p>子组件中用于绘图的数据都写死了，所以在自己运用时可以通过axios获取数据并整理成绘图的格式传入<strong>xAxis:的data和series</strong>相应处即可。</p> <p>3.在components目录下新建EchartsRoot.vue的echarts布局组件，也就是父组件，并在父组件中导入绘图子组件：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;template&gt;
+  &lt;div class=&quot;echartsStyle&quot;&gt;
+    &lt;el-row&gt;
+      &lt;el-col span=&quot;6&quot; v-for=&quot;i in 12&quot; :key=&quot;i&quot;&gt;
+        &lt;subEcharts 
+          :idCode='i'&gt;
+        &lt;/subEcharts&gt;
+      &lt;/el-col&gt;
+    &lt;/el-row&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import subEcharts from '@/components/subcomponents/SubEcharts'
+export default {
+  components:{
+    subEcharts
+  }
+
+}
+&lt;/script&gt;
+&lt;style&gt;
+.body{
+  width: 100%;
+  height: 100vh;
+}
+.echartsStyle{
+  background-color:#000;
+  width: 100%;
+  height: 100px;
+  margin: 10px
+}
+&lt;/style&gt;
+</code></pre></div><p>运用element-ui的layout布局使用v-for循环将绘图子组件<strong>subEcharts</strong>包裹起来实现4x3的页面布局,并且传入父组件的数据 <strong>i</strong> 供子组件的props的 <strong>idCode</strong> 接收：</p> <div class="language- extra-class"><pre class="language-text"><code>	&lt;el-col span=&quot;6&quot; v-for=&quot;i in 12&quot; :key=&quot;i&quot;&gt;
+        &lt;subEcharts 
+          :idCode='i'&gt;
+        &lt;/subEcharts&gt;
+    &lt;/el-col&gt;
+</code></pre></div><p>4.在Home.vue中添加跳转的按钮，跳转到echarts的展示组件EchartsRoot.vue
+1）在路由router.js中实现home到echarts展示页面的路由的配置：</p> <div class="language- extra-class"><pre class="language-text"><code>import Echarts from '@/components/EchartsRoot.vue'
+		{
+            path: '/echarts',
+            component: Echarts
+        }
+</code></pre></div><p>2）在home的template中添加html元素，并在methods中实现跳转的方法：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;el-button type=&quot;primary&quot; @click=&quot;toEcharts&quot;&gt;echarts图表&lt;/el-button&gt;
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>/**跳转到echarts界面 */
+    toEcharts(){
+      this.$router.push('/echarts')
+    }
+</code></pre></div><h2 id="_4-初步效果及问题"><a href="#_4-初步效果及问题" class="header-anchor">#</a> 4.初步效果及问题</h2> <p><img src="https://img-blog.csdnimg.cn/20190901113420481.gif" alt="在这里插入图片描述">
+到这里已经基本实现了想要的效果，但是当拖动屏幕大小的时候，4x3的布局的每一个echarts图大小不会随着屏幕自动的改变大小对屏幕进行适应，极大的降低了用户的体验。</p> <h2 id="_5-echarts图表对屏幕大小自适应"><a href="#_5-echarts图表对屏幕大小自适应" class="header-anchor">#</a> 5.echarts图表对屏幕大小自适应</h2> <p>1、如果一个界面只有一个或者每个echarts图都是单独写方法绘制的，那么进行自适应很简单，只需要调用echarts对象的**resize()**函数即可：</p> <div class="language- extra-class"><pre class="language-text"><code>//1.通过id获取html元素，调用echarts的init（）方法进行初始化
+let echarts = this.$echarts.init(document.getElementById('html元素id');
+//2.在绘图的option完成后或者之前调用window.onresize函数并在其中实现echarts.resize()即可
+window.onresize = function () {
+  	echarts.resize()
+}
+</code></pre></div><p>2、对于上例通过v-for循环和父子组建结合，通过复用子组件的方式实现单页面多echarts图的方式这种方法明显行不通。<strong>因为在子组件中1方法只局限于当前循环，每个循环结束后子组件就会覆盖resize（）方法，所以当图都加载完以后只有最后一个图能够自适应，其他图的resize（）方法都在循环中一层一层的被覆盖了。</strong>
+当然也可以按照其他思路实现所有图的自适应：在每一次for循环绘图结束时将此循环中的echarts对象传递到父组件一个数组或者列表中进行存放，当所有图都加载完以后在父组件中分别取出存放的每一个echarts对象调用resize（）函数实现所有echarts图的自适应。（思路是这样的没问题，具体过程没有做！）
+本例中采用另外的一种方法实现参考<a href="https://blog.csdn.net/LLDD2014425/article/details/86231174" target="_blank" rel="noopener noreferrer">该博客：vue中使用echarts图表自适应的几种基本解决方案<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>：在div上实现类似window的onresize 监听，这样既能实现图表的自适应，也不会因为页面跳转之后无法继续执行页面的onresize 方法！</p> <p>1）在醒目的assets目录下新建esresize.js文件：</p> <div class="language- extra-class"><pre class="language-text"><code>var EleResize = {
+  _handleResize: function (e) {
+    var ele = e.target || e.srcElement
+    var trigger = ele.__resizeTrigger__
+    if (trigger) {
+      var handlers = trigger.__z_resizeListeners
+      if (handlers) {
+        var size = handlers.length
+        for (var i = 0; i &lt; size; i++) {
+          var h = handlers[i]
+          var handler = h.handler
+          var context = h.context
+          handler.apply(context, [e])
+        }
+      }
+    }
+  },
+  _removeHandler: function (ele, handler, context) {
+    var handlers = ele.__z_resizeListeners
+    if (handlers) {
+      var size = handlers.length
+      for (var i = 0; i &lt; size; i++) {
+        var h = handlers[i]
+        if (h.handler === handler &amp;&amp; h.context === context) {
+          handlers.splice(i, 1)
+          return
+        }
+      }
+    }
+  },
+  _createResizeTrigger: function (ele) {
+    var obj = document.createElement('object')
+    obj.setAttribute('style',
+      'display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden;opacity: 0; pointer-events: none; z-index: -1;')
+    obj.onload = EleResize._handleObjectLoad
+    obj.type = 'text/html'
+    ele.appendChild(obj)
+    obj.data = 'about:blank'
+    return obj
+  },
+  _handleObjectLoad: function (evt) {
+    this.contentDocument.defaultView.__resizeTrigger__ = this.__resizeElement__
+    this.contentDocument.defaultView.addEventListener('resize', EleResize._handleResize)
+  }
+}
+if (document.attachEvent) { // ie9-10
+  EleResize.on = function (ele, handler, context) {
+    var handlers = ele.__z_resizeListeners
+    if (!handlers) {
+      handlers = []
+      ele.__z_resizeListeners = handlers
+      ele.__resizeTrigger__ = ele
+      ele.attachEvent('onresize', EleResize._handleResize)
+    }
+    handlers.push({
+      handler: handler,
+      context: context
+    })
+  }
+  EleResize.off = function (ele, handler, context) {
+    var handlers = ele.__z_resizeListeners
+    if (handlers) {
+      EleResize._removeHandler(ele, handler, context)
+      if (handlers.length === 0) {
+        ele.detachEvent('onresize', EleResize._handleResize)
+        delete ele.__z_resizeListeners
+      }
+    }
+  }
+} else {
+  EleResize.on = function (ele, handler, context) {
+    var handlers = ele.__z_resizeListeners
+    if (!handlers) {
+      handlers = []
+      ele.__z_resizeListeners = handlers
+
+      if (getComputedStyle(ele, null).position === 'static') {
+        ele.style.position = 'relative'
+      }
+      var obj = EleResize._createResizeTrigger(ele)
+      ele.__resizeTrigger__ = obj
+      obj.__resizeElement__ = ele
+    }
+    handlers.push({
+      handler: handler,
+      context: context
+    })
+  }
+  EleResize.off = function (ele, handler, context) {
+    var handlers = ele.__z_resizeListeners
+    if (handlers) {
+      EleResize._removeHandler(ele, handler, context)
+      if (handlers.length === 0) {
+        var trigger = ele.__resizeTrigger__
+        if (trigger) {
+          trigger.contentDocument.defaultView.removeEventListener('resize', EleResize._handleResize)
+          ele.removeChild(trigger)
+          delete ele.__resizeTrigger__
+        }
+        delete ele.__z_resizeListeners
+      }
+    }
+  }
+}
+export {EleResize}
+</code></pre></div><p>2）在SubEcharts.vue中导入esresize.js</p> <div class="language- extra-class"><pre class="language-text"><code>import {EleResize} from '../../assets/esresize.js'
+</code></pre></div><p>3）在SubEcharts.vue的绘图方法中，首先获取html的div元素，然后调用<strong>esresize.js的.on()方法</strong>：</p> <div class="language- extra-class"><pre class="language-text"><code>/**绘制折线图 */
+    drowLine(){
+      let echarts = this.$echarts.init(document.getElementById(this.echartsId));
+      let echartsid = document.getElementById(this.echartsId)
+      echarts.setOption({
+        代码省略·····
+      });
+      
+      let listener = function(){
+        echarts.resize()
+      }
+      EleResize.on(echartsid,listener)
+    },
+</code></pre></div><p>至此，实现了多个方法不会覆盖的echarts图的自适应功能，效果图如下：
+<img src="https://img-blog.csdnimg.cn/20190901131902588.gif" alt="在这里插入图片描述"></p> <p>欢迎大家关注本人的微信公众号，微信公众号将不定期发送相应学习文章和教程</p> <p><strong><center>微信号：chiyizao</center></strong> <center>或者微信公众号搜索：</center><center>迟亦早</center> <strong><center>二维码</center></strong> <center><img src="/vxgzhcode.jpg" style="height:250px;width:250px;"></center></p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/pages/blogs/[Vue四]:node后端响应登录请求.html" class="prev">
+        [Vue四]:node后端响应登录请求
+      </a></span> <span class="next"><a href="/pages/blogs/[Vue六]:vue开发自定义插件.html">
+        [Vue六]:vue开发自定义插件
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.da1fcfb1.js" defer></script><script src="/assets/js/2.a5a90059.js" defer></script><script src="/assets/js/16.b734a989.js" defer></script>
+  </body>
+</html>

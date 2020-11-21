@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>async、await与promise | GoodLoving博客</title>
+    <meta name="generator" content="VuePress 1.4.1">
+    <link rel="icon" href="/deer.png">
+    <meta name="description" content="goodloving的个人博客">
+    <link rel="preload" href="/assets/css/0.styles.9788b995.css" as="style"><link rel="preload" href="/assets/js/app.da1fcfb1.js" as="script"><link rel="preload" href="/assets/js/2.a5a90059.js" as="script"><link rel="preload" href="/assets/js/19.897824ba.js" as="script"><link rel="prefetch" href="/assets/js/10.2ec8cc46.js"><link rel="prefetch" href="/assets/js/11.120eb2ba.js"><link rel="prefetch" href="/assets/js/12.b4424a1c.js"><link rel="prefetch" href="/assets/js/13.fdee7ecb.js"><link rel="prefetch" href="/assets/js/14.b80709a8.js"><link rel="prefetch" href="/assets/js/15.5fcc9b2c.js"><link rel="prefetch" href="/assets/js/16.b734a989.js"><link rel="prefetch" href="/assets/js/17.8d4c7acd.js"><link rel="prefetch" href="/assets/js/18.0a70c3d7.js"><link rel="prefetch" href="/assets/js/20.ab202385.js"><link rel="prefetch" href="/assets/js/21.f8ec5466.js"><link rel="prefetch" href="/assets/js/22.3709aff1.js"><link rel="prefetch" href="/assets/js/23.155f7dae.js"><link rel="prefetch" href="/assets/js/3.29fc4231.js"><link rel="prefetch" href="/assets/js/4.a2352ed1.js"><link rel="prefetch" href="/assets/js/5.e922c6c6.js"><link rel="prefetch" href="/assets/js/6.fd1ce71a.js"><link rel="prefetch" href="/assets/js/7.bd736922.js"><link rel="prefetch" href="/assets/js/8.1d8e4393.js"><link rel="prefetch" href="/assets/js/9.ef0f8e05.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.9788b995.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/deer.png" alt="GoodLoving博客" class="logo"> <span class="site-name can-hide">GoodLoving博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/pages/blogs/catalog.html" class="nav-link">
+  文章
+</a></div><div class="nav-item"><a href="https://blog.csdn.net/qq_31967985" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  CSDN
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://gitee.com/goodloving" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://github.com/goodloving" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/pages/blogs/catalog.html" class="nav-link">
+  文章
+</a></div><div class="nav-item"><a href="https://blog.csdn.net/qq_31967985" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  CSDN
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://gitee.com/goodloving" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://github.com/goodloving" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>导航</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Vue基础</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>JS进阶</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Node基础</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/pages/blogs/async、await与promise.html" class="active sidebar-link">async、await与promise</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/pages/blogs/async、await与promise.html#_1-promise详解" class="sidebar-link">1.Promise详解</a></li><li class="sidebar-sub-header"><a href="/pages/blogs/async、await与promise.html#_2-async和await详解" class="sidebar-link">2.async和await详解</a></li><li class="sidebar-sub-header"><a href="/pages/blogs/async、await与promise.html#_3-总结与分析" class="sidebar-link">3.总结与分析</a></li></ul></li><li><a href="/pages/blogs/node.js自带的异步写法.html" class="sidebar-link">node.js自带的异步写法</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>项目应用</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="async、await与promise"><a href="#async、await与promise" class="header-anchor">#</a> async、await与promise</h1> <p></p><div class="table-of-contents"><ul><li><a href="#_1-promise详解">1.Promise详解</a></li><li><a href="#_2-async和await详解">2.async和await详解</a></li><li><a href="#_3-总结与分析">3.总结与分析</a></li></ul></div><p></p> <h2 id="_1-promise详解"><a href="#_1-promise详解" class="header-anchor">#</a> 1.Promise详解</h2> <p><strong>==Promise是对异步编程的一种解决方案==</strong>
+  Promise是一个构造函数，自身有all、reject、resolve这几个方法，原型上有then、catch等方法。Promise的构造函数接收一个函数作为参数，并且在函数中传入两个参数：resolve，reject，分别表示异步操作执行成功后的回调函数和异步操作执行失败后的回调函数。其中resolve将Promise的状态置为fullfiled，reject将Promise的状态置为rejected。，接下来直接看代码：</p> <div class="language- extra-class"><pre class="language-text"><code>console.log('start')
+
+var p = new Promise((resolve, reject) =&gt; {
+  console.log('enter Promise')
+  //异步操作
+  setTimeout(() =&gt; {
+    console.log('time out')
+    console.log(reject)
+    //执行失败的回调函数，将会在catch中进行接收
+    reject(123456)
+  },3000)
+})
+
+p.then(r =&gt; {
+  console.log(r)
+  console.log('promise then')
+})
+
+p.catch(e =&gt; {
+  console.log(e)
+  console.log('promise catch')
+  console.log(p)
+})
+
+console.log(p)
+console.log('end')
+</code></pre></div><p>代码中用setTimeout模拟异步的操作。我们先来观察打印出来的结果：</p> <div class="language- extra-class"><pre class="language-text"><code>start
+enter Promise
+Promise { &lt;pending&gt; }
+end
+time out
+[Function]
+123456
+promise catch
+Promise { &lt;rejected&gt; 123456 }
+</code></pre></div><p>根据结果分析程序运行的顺序探讨Promise的执行过程：
+<img src="https://img-blog.csdnimg.cn/20190922165719886.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMxOTY3OTg1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">
+  从上述代码的执行顺序来看，==无论是Promise内部还是处于同一级的其他其他代码，只要是非异步耗时操作都会按顺序在主线程执行==，例如，结果中	<code>1.start 2.enter Promise 3.Promise { &lt;pending&gt; } 4.end</code>其中<code>2.enter Promise</code>处在Promise内部但是并不是耗时的异步操作，故直接执行不需要等待；接着程序执行到setTimeout定时任务的异步耗时操作，进入任务队列中等待（后面文章将会进行详解），主线程依次执行完<code>3.Promise { &lt;pending&gt; } 4.end</code>，此时主线程为空，即没有代码在执行，任务队列得知主线程为空就会开始执行，于是3秒后执行代码<code>5.time out 6.[Function]</code>，通过reject返回结果回调执行.catch，再依次执行<code>7.123456 8.promise catch 9.Promise { &lt;rejected&gt; 123456 }</code>。
+  同时，可以观察到，当Promise中的异步耗时还没有执行，即没有调用resolve和reject时，打印出Promise状态为<code>{ &lt;pending&gt; }</code>，当调用resolve返回结果时打印Promise状态为<code>{ &lt;rejected&gt; 123456 }</code>，当然当调用resolve是Promise状态为<code>{ &lt;fulfilled&gt; }</code>。</p> <h2 id="_2-async和await详解"><a href="#_2-async和await详解" class="header-anchor">#</a> 2.async和await详解</h2> <p>  async 用来定义一个返回 AsyncFunction 对象的异步函数，==它会通过一个隐式的 Promise 返回其结果==。如果你在代码中使用了异步函数，就会发现它的语法和结构会更像是标准的同步函数。返回的Promise对象会运行执行(resolve)异步函数的返回结果，或者运行拒绝比如异步函数抛出异常的话，运行执行(reject)异步函数的返回结果。await可以是Promise同步，即不会立即执行Proimse外面(或者说下面)的代码，而await只能用在async标记的函数中，<strong>==这样async函数本身就是异步的，而async函数里面的代码是同步的==</strong>。async本身是异步的，可以这样理解，<strong>async函数执行到await的时候就立即await修饰的代码，并返回结果</strong>。async下面的代码，与await等待执行的代码同时执行。（说起来有点拗口），直接看代码和结果分析：</p> <div class="language- extra-class"><pre class="language-text"><code>function resolveAfter2Seconds() {
+  return new Promise(resolve =&gt; {
+    setTimeout(() =&gt; {
+      console.log('time out')
+      resolve('resolved');
+    }, 2000);
+  });
+}
+/**
+ * async + await */
+async function asyncCall() {
+  console.log('before');
+  var result = await resolveAfter2Seconds();
+  console.log(result);
+  console.log('after');
+}
+
+/**
+ * 正常函数 */
+function call() {
+  console.log('before');
+  var result = resolveAfter2Seconds();
+  console.log(result);
+  console.log('after');
+}
+
+console.log('start')
+ asyncCall();
+//call();
+console.log('end')
+</code></pre></div><p>首先注释掉<code>//call();</code>，结果为：</p> <div class="language- extra-class"><pre class="language-text"><code>start
+before
+end   
+time out
+resolved
+after
+</code></pre></div><p>然后换成注释掉<code>//asyncCall();</code>，结果为：</p> <div class="language- extra-class"><pre class="language-text"><code>start
+before
+Promise { &lt;pending&gt; }
+after
+end
+time out
+</code></pre></div><p><img src="https://img-blog.csdnimg.cn/20190922175810259.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMxOTY3OTg1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">
+分析：对于async修饰的函数，当用await进行结果修饰时result会等待<code>resolveAfter2Seconds()</code>执行完毕并且得到其结果，然后再执行</p> <div class="language- extra-class"><pre class="language-text"><code>console.log(result);
+console.log('after');
+</code></pre></div><p>同时观察到打印出来的resulit为<code>resolved</code>，说明Promse返回不为空；当不用async和await时，观察发现，此时result打印出来为<code>Promise { &lt;pending&gt; }</code>说明此时的Promise为空，即异步结果还没有返回，最后才执行输出<code>time out</code>。</p> <h2 id="_3-总结与分析"><a href="#_3-总结与分析" class="header-anchor">#</a> 3.总结与分析</h2> <p><strong>==Promise和async、await都是作为异步编程的一种解决方案==</strong>，有时候程序执行异步操作时，如果其后面代码的运行依赖返回的结果，这时候我们就可以运用Promise和async、await进行解决。对于依赖异步结果的代码，在Promise中，将其放在then或者catch中，在async修饰的函数中，将其放在await的后面。
+  通过上面的的代码演示，async和await解决异步实际上也是封装了Promise，并且以后只要我们看到.then和.catch的形式就能确定其原理一定是Promise，例如axios.</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/pages/blogs/[JS进阶]手撕Promise,一码一解析包懂.html" class="prev">
+        [JS进阶]手撕Promise,一码一解析包懂
+      </a></span> <span class="next"><a href="/pages/blogs/node.js自带的异步写法.html">
+        node.js自带的异步写法
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.da1fcfb1.js" defer></script><script src="/assets/js/2.a5a90059.js" defer></script><script src="/assets/js/19.897824ba.js" defer></script>
+  </body>
+</html>

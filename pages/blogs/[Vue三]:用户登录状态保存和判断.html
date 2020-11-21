@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>[Vue三]:用户登录状态保存和判断 | GoodLoving博客</title>
+    <meta name="generator" content="VuePress 1.4.1">
+    <link rel="icon" href="/deer.png">
+    <meta name="description" content="goodloving的个人博客">
+    <link rel="preload" href="/assets/css/0.styles.9788b995.css" as="style"><link rel="preload" href="/assets/js/app.da1fcfb1.js" as="script"><link rel="preload" href="/assets/js/2.a5a90059.js" as="script"><link rel="preload" href="/assets/js/14.b80709a8.js" as="script"><link rel="prefetch" href="/assets/js/10.2ec8cc46.js"><link rel="prefetch" href="/assets/js/11.120eb2ba.js"><link rel="prefetch" href="/assets/js/12.b4424a1c.js"><link rel="prefetch" href="/assets/js/13.fdee7ecb.js"><link rel="prefetch" href="/assets/js/15.5fcc9b2c.js"><link rel="prefetch" href="/assets/js/16.b734a989.js"><link rel="prefetch" href="/assets/js/17.8d4c7acd.js"><link rel="prefetch" href="/assets/js/18.0a70c3d7.js"><link rel="prefetch" href="/assets/js/19.897824ba.js"><link rel="prefetch" href="/assets/js/20.ab202385.js"><link rel="prefetch" href="/assets/js/21.f8ec5466.js"><link rel="prefetch" href="/assets/js/22.3709aff1.js"><link rel="prefetch" href="/assets/js/23.155f7dae.js"><link rel="prefetch" href="/assets/js/3.29fc4231.js"><link rel="prefetch" href="/assets/js/4.a2352ed1.js"><link rel="prefetch" href="/assets/js/5.e922c6c6.js"><link rel="prefetch" href="/assets/js/6.fd1ce71a.js"><link rel="prefetch" href="/assets/js/7.bd736922.js"><link rel="prefetch" href="/assets/js/8.1d8e4393.js"><link rel="prefetch" href="/assets/js/9.ef0f8e05.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.9788b995.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/deer.png" alt="GoodLoving博客" class="logo"> <span class="site-name can-hide">GoodLoving博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/pages/blogs/catalog.html" class="nav-link">
+  文章
+</a></div><div class="nav-item"><a href="https://blog.csdn.net/qq_31967985" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  CSDN
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://gitee.com/goodloving" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://github.com/goodloving" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/pages/blogs/catalog.html" class="nav-link">
+  文章
+</a></div><div class="nav-item"><a href="https://blog.csdn.net/qq_31967985" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  CSDN
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://gitee.com/goodloving" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://github.com/goodloving" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>导航</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Vue基础</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/pages/blogs/[Vue一]:了解Vue项目的建立.html" class="sidebar-link">[Vue一]:了解Vue项目的建立</a></li><li><a href="/pages/blogs/[Vue二]:简单登录界面的实现.html" class="sidebar-link">[Vue二]:简单登录界面的实现</a></li><li><a href="/pages/blogs/[Vue三]:用户登录状态保存和判断.html" class="active sidebar-link">[Vue三]:用户登录状态保存和判断</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/pages/blogs/[Vue三]:用户登录状态保存和判断.html#_1-vuex的导入、注册和基本用法" class="sidebar-link">1.vuex的导入、注册和基本用法</a></li><li class="sidebar-sub-header"><a href="/pages/blogs/[Vue三]:用户登录状态保存和判断.html#_2-登录功能中完善对token的存储" class="sidebar-link">2.登录功能中完善对token的存储</a></li><li class="sidebar-sub-header"><a href="/pages/blogs/[Vue三]:用户登录状态保存和判断.html#_3-跳转home页面完成数据请求加载和渲染" class="sidebar-link">3.跳转home页面完成数据请求加载和渲染</a></li><li class="sidebar-sub-header"><a href="/pages/blogs/[Vue三]:用户登录状态保存和判断.html#_4-路由跳转判定和请求验证" class="sidebar-link">4.路由跳转判定和请求验证</a></li><li class="sidebar-sub-header"><a href="/pages/blogs/[Vue三]:用户登录状态保存和判断.html#_5-总结" class="sidebar-link">5.总结</a></li></ul></li><li><a href="/pages/blogs/[Vue四]:node后端响应登录请求.html" class="sidebar-link">[Vue四]:node后端响应登录请求</a></li><li><a href="/pages/blogs/[Vue五]:Vue和echarts结合.html" class="sidebar-link">[Vue五]:Vue和echarts结合</a></li><li><a href="/pages/blogs/[Vue六]:vue开发自定义插件.html" class="sidebar-link">[Vue六]:vue开发自定义插件</a></li><li><a href="/pages/blogs/[Vue七]:通过nginx的服务器配置.html" class="sidebar-link">[Vue七]:通过nginx的服务器配置</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>JS进阶</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Node基础</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>项目应用</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="vue三-用户登录状态保存和判断"><a href="#vue三-用户登录状态保存和判断" class="header-anchor">#</a> [Vue三]:用户登录状态保存和判断</h1> <p></p><div class="table-of-contents"><ul><li><a href="#_1-vuex的导入、注册和基本用法">1.vuex的导入、注册和基本用法</a></li><li><a href="#_2-登录功能中完善对token的存储">2.登录功能中完善对token的存储</a></li><li><a href="#_3-跳转home页面完成数据请求加载和渲染">3.跳转home页面完成数据请求加载和渲染</a></li><li><a href="#_4-路由跳转判定和请求验证">4.路由跳转判定和请求验证</a></li><li><a href="#_5-总结">5.总结</a></li></ul></div><p></p> <h2 id="_1-vuex的导入、注册和基本用法"><a href="#_1-vuex的导入、注册和基本用法" class="header-anchor">#</a> 1.vuex的导入、注册和基本用法</h2> <p>1、在src目录下新建store目录，并在目录下新建index.js文件
+<img src="https://img-blog.csdnimg.cn/20190824201657510.?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMxOTY3OTg1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">
+2、参照<a href="https://vuex.vuejs.org/zh/" target="_blank" rel="noopener noreferrer">Vuex的用法<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>对登录中用户的token进行全局的定义和存储</p> <div class="language- extra-class"><pre class="language-text"><code>import Vue from 'vue'
+import vuex from 'vuex'
+Vue.use(vuex)
+export default new vuex.Store({
+    /**
+     * 公共数据存放区 */
+    state:{
+        Authorization: sessionStorage.getItem('Authorization') ?  sessionStorage.getItem('Authorization'):''    //从sessionStorage中获取token,没有就默认为空
+    },
+    /**
+     * 修改数据要通过的mutations */
+    mutations:{
+        changeToken(state, token){
+            state.Authorization = token
+            sessionStorage.setItem('Authorization', token)
+        }
+    },
+    /**
+     * 获取数据可以用上的getters */
+    getters:{
+        getToken(state) {
+            return state.Authorization
+        }
+    },
+    /**
+     * 异步处理可能用上的actions */
+    actions:{
+    }
+})
+</code></pre></div><p>Vuex的导入及注册和vue-rouer一样。做一个不恰当的类比：state相当于组件中的data，mutations相当于组件中的methods，getters相当于组件中的computed。在state中我们定义存放token的字段&quot;Authorization&quot;，并且用三元表达式为其赋值，sessionStarage为浏览器的一次会话的存储空间，会话结实就会清空；在mutations中我们定义一个方法&quot;changeToken&quot;来对token进行存放和赋值给state中的&quot;Authorization&quot;。
+3、建立和定义好Vuex后要在main.js中对vuex进行全局的注册和实例化：</p> <div class="language- extra-class"><pre class="language-text"><code>import store  from './store/index'
+
+new Vue({
+  router,
+  store,
+  render: h =&gt; h(App),
+}).$mount('#app')
+</code></pre></div><p>到此，就可以在项目的任意地方对'Authorization'进行赋值和获取了。</p> <h2 id="_2-登录功能中完善对token的存储"><a href="#_2-登录功能中完善对token的存储" class="header-anchor">#</a> 2.登录功能中完善对token的存储</h2> <div class="language- extra-class"><pre class="language-text"><code>	//点击登录按钮执行访问请求并判断是否登陆
+    toHome(){
+      this.$axios({
+        method: 'post',
+        url: '/loginapp',
+        data: this.$qs.stringify({          //axios的post方法访问后端this.qs.stringify(
+          usename: this.usename,
+          password: this.password
+        }), 
+      })
+      .then(res=&gt;{                    //请求成功后执行函数
+        if(res.data.msg === 'S'){
+          this.$store.commit('changeToken',res.data.token)    //对token进行存储
+          this.$router.push('/home')                          //路由跳转到home界面
+          this.$notify({
+            title: '提示',
+            message: '用户登录成功',
+            duration: 3000
+          });
+        }else{
+          this.$notify({
+            title: '提示',
+            message: '用户登录失败',
+            duration: 3000
+          });
+        }
+      })
+      .catch(err=&gt;{                   //请求错误后执行函数
+        this.$notify({
+              title: '提示',
+              message: '用户访问错误',
+              duration: 3000
+            });
+        console.log(err)
+      })
+    }
+  }
+</code></pre></div><p>这里贴出来的时登录的完整功能代码，通过<strong>res.data.token</strong>获取到服务器返回来的token，前面对vuex进行了全局的注册，在这里通过代码<strong>his.$store.commit('changeToken',res.data.token)</strong> 实现对mutations中changeToken的调用，并且将token值传入，将token分别存入<strong>state和sessionStorage</strong>中供后面使用。</p> <div class="language- extra-class"><pre class="language-text"><code>	mutations:{
+        changeToken(state, token){
+            state.Authorization = token
+            sessionStorage.setItem('Authorization', token)
+        }
+    },
+</code></pre></div><h2 id="_3-跳转home页面完成数据请求加载和渲染"><a href="#_3-跳转home页面完成数据请求加载和渲染" class="header-anchor">#</a> 3.跳转home页面完成数据请求加载和渲染</h2> <p>此处要是实现跳转到home页面时已经完成对服务器数据的加载和在页面上的渲染。首先用element-ui的table标签进行模板布局，在方法中调用axios的get方法向服务器发送请求，最终将请求的数据渲染在页面上：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;template&gt;
+  &lt;el-table
+    :data=&quot;tableData&quot;
+    stripe
+    style=&quot;width: 100%&quot;&gt;
+    &lt;el-table-column
+      prop=&quot;date&quot;
+      label=&quot;日期&quot;
+      width=&quot;180&quot;&gt;
+    &lt;/el-table-column&gt;
+    &lt;el-table-column
+      prop=&quot;name&quot;
+      label=&quot;姓名&quot;
+      width=&quot;180&quot;&gt;
+    &lt;/el-table-column&gt;
+    &lt;el-table-column
+      prop=&quot;address&quot;
+      label=&quot;地址&quot;&gt;
+    &lt;/el-table-column&gt;
+  &lt;/el-table&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { type } from 'os';
+export default {
+  /**
+  数据存放去 */
+  data(){
+    return{
+      tableData:''
+    }
+  },
+  /**
+  创建vue实例后执行的钩子函数 */
+  created(){
+    this.getInfos()
+  },
+  /**
+  方法区 */
+  methods:{
+    /**获取后端数据 */
+    getInfos(){
+      this.$axios.get('/getInfos')
+        .then(res=&gt;{
+          this.tableData = JSON.parse(res.data.infos)
+        })
+        .catch(err=&gt;{
+          this.$message({
+            message:'获取数据错误',
+            type: 'error',
+            duration: 3000
+          })
+        })
+    }
+  },
+}
+&lt;/script&gt;
+</code></pre></div><p>在methods中定义getInfos方法请求服务器数据，同时用<strong>JSON.parse(res.data.infos)<strong>将数据转为json格式数据并赋值给template模板的table中绑定的tableData。要想实现载页面加载之前就在Dom中对表格渲染完成，需要将getInfos方法放入Vue生命周期函数created中。
+至此我们可以是实现登录并且数据加载，如图:
+<img src="https://img-blog.csdnimg.cn/20190824205747376.gif" alt="在这里插入图片描述">
+但是也存在问题：
+<img src="https://img-blog.csdnimg.cn/20190824210730465.gif" alt="在这里插入图片描述">
+在浏览器的地址栏，直接输入</strong>http://localhost:8081/#/home</strong>就会跳过登陆界面直接进入home界面，显然这样是不安全，也是实际开发中不可为的，登录功能也就失去了他的意义。</p> <h2 id="_4-路由跳转判定和请求验证"><a href="#_4-路由跳转判定和请求验证" class="header-anchor">#</a> 4.路由跳转判定和请求验证</h2> <p>对此，我们需要：
+1.在每次页面跳转的时候对路由地址进行判定，如果是登录界面直接跳转过去，如果是其他页面，需要对用户的token进行判定，如果token和服务器的token一致，允许路由跳转，如果token为空或者与服务器的token不一致，阻止路由跳转并将页面跳转到登录页让用户登录；
+2.对于用户每次请求服务器的数据的请求也要进行判定和用户信息验证。让用户的每次请求头中带上登录成功时存储在sessionStorage的'Authorization'对应的token，并且将用户携带的token和服务器中对应的用户token进行对比，验证通过返回用户请求的数据和通过标识；验证不通过返回让用户重新登录得标识；
+<strong>因此，在页面进行跳转和请求之前，请求数据返回给用户之前进行拦截判定</strong>：
+在main.js中调用axios.interceptors和router.beforeEach方法进行拦截和判定</p> <div class="language- extra-class"><pre class="language-text"><code>import Vue from 'vue'
+import App from './App.vue'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import axios from 'axios'
+import qs from 'qs';
+import router from './router/router'
+import store  from './store/index'
+
+Vue.config.productionTip = false
+Vue.use(ElementUI)
+Vue.prototype.$axios = axios
+Vue.prototype.$qs = qs
+
+//定义全局默认配置所有的请求头中都带上Authorization的token
+axios.defaults.headers.common['Authorization'] = ''
+
+new Vue({
+  router,
+  store,
+  render: h =&gt; h(App),
+}).$mount('#app')
+
+//所有求情发送出去之前要经过axios请求拦截器
+axios.interceptors.request.use(
+  config =&gt; {
+    if(config.url != '/loginapp'){			//如果不是登录得请求
+      if(sessionStorage.getItem('Authorization')){				//判断浏览器中是否有token
+        config.headers.Authorization = sessionStorage.getItem('Authorization')		//如果有token就带上token请求服务器数据
+      }else{
+        this.$router.push('/')							//如果浏览器中没有token就跳转到登陆界面
+      }
+    }
+    return config;
+  },
+  err =&gt; {
+    return Promise.reject(err);
+  }
+),
+//所有求情的结果返回之前要经过axios响应拦截器
+axios.interceptors.response.use(
+  res =&gt; {
+    if(res.data.msg === 'S'){					//如果服务器对用户验证通过返回“S”成功标签就将用户需要的数据传递给请求的地方
+      return res
+    }
+  },
+  err =&gt; {
+    err				//如果服务器对用户验证不通过，清空浏览器中可能是失效了得token并跳转到登陆界面
+    sessionStorage.removeItem('Authorization');
+    this.$router.push('/');
+  }
+),
+//路由跳转之前进行判断
+router.beforeEach((to, from, next) =&gt;{		
+  if(to.path === '/'){			//每次页面路由跳转的时候进行判断，如果是跳转到登陆界面就直接放行
+    next()
+  }else{
+    let token = sessionStorage.getItem('Authorization')	
+    if(token === &quot;null&quot; || token === ''){			//如果是跳转到其他页面，先判断token是否为空或者是否存在，不存在就跳转到登陆界面重新登陆
+      next('/')
+    }
+    else{								//如果有token直接放行
+      next()
+    }
+  }
+});
+</code></pre></div><p>我们来看效果：
+<img src="https://img-blog.csdnimg.cn/20190824214440604.gif" alt="在这里插入图片描述">
+在地址栏中修改地址跳过登录页面发现已经无法像上次那样直接跳转，说明拦截验证成功，输入用户名和密码自此登陆成功！</p> <h2 id="_5-总结"><a href="#_5-总结" class="header-anchor">#</a> 5.总结</h2> <p>综合<a href="https://blog.csdn.net/qq_31967985/article/details/99706139" target="_blank" rel="noopener noreferrer">[Vue二]：实现页面登录功能，element-ui，vue-router，axios的学习<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>和[vue三]：用户登录状态保存和请求进行判断，vuex结合vue-router，axios的学习，实现了用户登录得完成功能其中涉及以下知识点：element-ui、<strong>vue-router、axios、Vuex</strong>基本使用，其中加粗内容为重点知识，通过具体实例，对用户登录请求和数据请求安全性有了深入的了解。</p> <p>欢迎大家关注本人的微信公众号，微信公众号将不定期发送相应学习文章和教程</p> <p><strong><center>微信号：chiyizao</center></strong> <center>或者微信公众号搜索：</center><center>迟亦早</center> <strong><center>二维码</center></strong> <center><img src="/vxgzhcode.jpg" style="height:250px;width:250px;"></center></p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/pages/blogs/[Vue二]:简单登录界面的实现.html" class="prev">
+        [Vue二]:简单登录界面的实现
+      </a></span> <span class="next"><a href="/pages/blogs/[Vue四]:node后端响应登录请求.html">
+        [Vue四]:node后端响应登录请求
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.da1fcfb1.js" defer></script><script src="/assets/js/2.a5a90059.js" defer></script><script src="/assets/js/14.b80709a8.js" defer></script>
+  </body>
+</html>
